@@ -7,6 +7,7 @@ export CLUSTER=dev
 export AWS_ACCOUNT=preprod
 export PROJECT=microdc
 export CIDR=10.68.0.0/16
+export EXTERNAL_DOMAIN=${CLUSTER}.k8s.${AWS_ACCOUNT_DOMAIN}.${TLD}  # <== Set this to appropriate values for your installation, eg: `${CLUSTER}.k8s.${AWS_ACCOUNT}.example.com`
 
 export AWS_DEFAULT_PROFILE=${PROJECT}-${AWS_ACCOUNT}
 export AWS_DEFAULT_REGION=eu-west-1
@@ -44,7 +45,7 @@ kops edit cluster ${NAME}
 ```
 * Set the version of the KubeAPI to use
 ```
-  masterPublicName: ${EXTERNAL_DOMAIN}   # this key exists so find it and change it rather then adding it in. it should be set to what ever you want the public api dns address to be, which you need to create manaually in your dns currently.
+  masterPublicName: api.${EXTERNAL_DOMAIN}   # this key exists so find it and change it rather then adding it in. it should be set to what ever you want the public api dns address to be, which you need to create manaually in your dns currently.
   kubeAPIServer:
     #user that's got all the rights regardless of groups, roles, what ever
     authorizationRbacSuperUser: admin
